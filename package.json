@@ -1,0 +1,11 @@
+{
+  "name": "com.raiden.assetbundleassetreference",
+  "version": "1.0.0",
+  "displayName": "AssetBundle Asset Reference",
+  "unity": "2022.3",
+  "description": "AssetBundle Asset Reference",
+  "author": {
+    "name": "Raidenxd2",
+    "url": "https://raidenxd2.github.io/"
+  }
+}
