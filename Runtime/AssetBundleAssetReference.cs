@@ -6,7 +6,7 @@ using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 #endif
 
-namespace AssetBundleAssetReference.Runtime
+namespace com.raiden.assetbundleassetreference.Runtime
 {
     [System.Serializable]
     public class AssetBundleAssetReference : ISerializationCallbackReceiver
