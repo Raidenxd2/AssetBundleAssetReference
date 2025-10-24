@@ -2,8 +2,10 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
+#if ABAR_UIE
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+#endif
 #endif
 
 namespace com.raiden.assetbundleassetreference.Runtime
@@ -55,7 +57,7 @@ namespace com.raiden.assetbundleassetreference.Runtime
 #endif
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ABAR_UIE
     [CustomPropertyDrawer(typeof(AssetBundleAssetReference))]
     [CanEditMultipleObjects]
     public class AssetBundleAssetReferenceUIE : PropertyDrawer
@@ -78,6 +80,35 @@ namespace com.raiden.assetbundleassetreference.Runtime
             container.Add(assetField);
 
             return container;
+        }
+    }
+#elif UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(AssetBundleAssetReference))]
+    [CanEditMultipleObjects]
+    public class AssetBundleAssetReferenceDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+
+            var indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+
+            var objectRect = new Rect(position.x, position.y, position.width, position.height);
+
+            EditorGUI.PropertyField(objectRect, property.FindPropertyRelative("Asset"), GUIContent.none);
+
+            var isDirtyProperty = property.FindPropertyRelative("IsDirty");
+            if (isDirtyProperty.boolValue)
+            {
+                isDirtyProperty.boolValue = false;
+            }
+
+            EditorGUI.indentLevel = indent;
+
+            EditorGUI.EndProperty();
         }
     }
 #endif
